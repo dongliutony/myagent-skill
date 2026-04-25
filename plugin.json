@@ -1,0 +1,6 @@
+{
+  "name": "myagent",
+  "description": "生产级 AI Agent 开发技能集 — 覆盖 Agent 循环、工具系统、Prompt 管线、记忆、安全、多 Agent 等 14 个关键领域",
+  "version": "1.0.0",
+  "skills": "./skills"
+}
