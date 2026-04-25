@@ -10,9 +10,39 @@ type: flexible
 通过交互设计让用户觉得 Agent "智能"且"可控"。
 
 ## 参考实现 Snippets
+- `snippets/ux/status-indicators.tsx` — **核心**：工具状态行（绿点）+ 思考指示器（红色 shimmer + 实时元数据）— 用户确定感设计
 - `snippets/ux/progress-and-transparency.tsx` — Spinner + Diff + 折叠 + 风险颜色 + 分类器反馈 + 可中断
 
+## 用户确定感的三层模型
+
+**最重要的 UX 设计原则** — 缺少任何一层，用户都会感到不安：
+
+| 层 | 问题 | 解决 | 组件 |
+|----|------|------|------|
+| 存在感 | "卡死了吗？" | 动画元素（闪烁 ✱、shimmer 扫光） | ThinkingIndicator |
+| 方向感 | "在做什么？" | 工具名 + 参数 + 结果摘要 | ToolStatusLine |
+| 掌控感 | "做得对吗？花了多少？" | 实时元数据 + 风险颜色 + 可中断 | 元数据 + RiskBadge |
+
+### 工具状态行（绿点 ●）
+```
+● Write(~/.claude/plugins/myagent/snippets/ux/status-indicators.tsx)
+  └ Wrote 195 lines to status-indicators.tsx
+```
+- 绿点 = "我做了这件事"
+- 工具名(参数) = "我用什么工具做什么"
+- 结果摘要 = "结果是什么"
+
+### 思考指示器（红色动画 ✱ + shimmer + 元数据）
+```
+✱ Pretending to think… (3m 3s · ↓ 7.3k tokens · thought for 3s)
+```
+- 红色闪烁 ✱ = "AI 在处理中"
+- Shimmer 扫光 = 视觉动感强化"正在进行"
+- 元数据 = 耗时 · token 消耗 · 思考时长
+
 ## 设计检查清单
+- [ ] **工具状态行**：每个工具调用展示 ● + 工具名(参数) + 结果摘要
+- [ ] **思考指示器**：动画 ✱ + shimmer 扫光 + 实时元数据（耗时·token·思考时长）
 - [ ] 全链路流式输出
 - [ ] 每个工具有 getActivityDescription（"Reading src/foo.ts"）
 - [ ] Spinner + 减少动画模式 + 停滞红色
