@@ -1,0 +1,17 @@
+{
+  "name": "myagent-local",
+  "owner": {
+    "name": "dongliutony"
+  },
+  "metadata": {
+    "description": "Local marketplace wrapping the myagent plugin",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "myagent",
+      "source": "./",
+      "description": "Production-grade AI Agent skill set — covers loop, tools, prompts, memory, security, multi-agent and 14 key domains"
+    }
+  ]
+}

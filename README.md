@@ -24,13 +24,18 @@
 ```bash
 # 1. Clone 到 Claude Code 插件目录
 git clone https://github.com/dongliutony/myagent-skill.git ~/.claude/plugins/myagent
+```
 
-# 2. 创建符号链接（让 Claude Code 自动发现 skills）
-cd ~/.claude/skills
-for s in route loop tools prompts memory security human resilience streaming observability cost multi production ux; do
-  ln -sf "../plugins/myagent/skills/$s" "myagent-$s"
-done
-ln -sf "../plugins/myagent/skills/route" "myagent"
+```bash
+# 2. 在 Claude Code 中依次执行以下 slash 命令注册并启用插件
+/plugin marketplace add ~/.claude/plugins/myagent
+/plugin install myagent@myagent-local
+/reload-plugins
+```
+
+```bash
+# 3. 验证：在新对话中问 Claude "列出可用的 myagent skill"
+#    应能看到 myagent:route、myagent:loop、myagent:tools 等 14 个子 skill
 ```
 
 ## 更新
@@ -39,13 +44,15 @@ ln -sf "../plugins/myagent/skills/route" "myagent"
 cd ~/.claude/plugins/myagent && git pull
 ```
 
+然后在 Claude Code 中执行 `/reload-plugins` 刷新。
+
 ## 使用
 
 在 Claude Code 中直接说：
 
 - "使用 myagent 技能" — 路由 skill 自动判断并调用对应子 skill
-- `/myagent` — 同上
-- `/myagent-loop` — 直接使用特定子 skill
+- `/myagent:route` — 入口路由
+- `/myagent:loop` — 直接使用特定子 skill
 
 无需记住子 skill 名称，路由会根据你的任务描述自动选择。
 
@@ -53,7 +60,9 @@ cd ~/.claude/plugins/myagent && git pull
 
 ```
 myagent/
-├── plugin.json
+├── .claude-plugin/
+│   ├── plugin.json              # 插件清单
+│   └── marketplace.json         # 本地 marketplace 注册
 ├── references/
 │   └── BEST_AGENT_ARCHITECTURE.md    # 架构设计文档
 ├── skills/                            # 14 个 skill
